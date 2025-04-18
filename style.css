@@ -1,0 +1,387 @@
+/* Animacje dla elementów */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scale {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Klasy użytkowe dla animacji */
+.animate-fade-in {
+    animation: fade-in 0.8s ease-out;
+}
+
+.animate-slide-in {
+    animation: slide-in 0.8s ease-out;
+}
+
+.animate-scale {
+    animation: scale 0.8s ease-out;
+}
+
+/* Smooth hover transitions */
+button, a, .service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover, a:hover, .service-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Styl dla menu mobilnego */
+#mobileMenu {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transition: transform 0.3s ease-in-out;
+}
+
+#mobileMenu > div {
+    max-height: 90%; /* Ograniczenie maksymalnej wysokości menu */
+    overflow-y: auto; /* Dodanie przewijania, jeśli zawartość przekracza maksymalną wysokość */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0.5rem 0.5rem 0; /* Zaokrąglenie prawego górnego i dolnego rogu */
+}
+
+#mobileMenu[aria-hidden="true"] {
+    display: none;
+}
+
+#mobileMenu[aria-hidden="false"] {
+    display: flex;
+}
+
+/* FAQ */
+details[open] summary {
+    color: #1e40af;
+}
+
+details summary {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Hover Effects */
+.service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.map-container iframe {
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+}
+
+.map-container:hover iframe {
+    filter: grayscale(0);
+}
+
+/* Styl dla kalendarza podatkowego */
+#taxCalendar li {
+    transition: background-color 0.2s ease;
+}
+
+#taxCalendar li:hover {
+    background-color: rgba(59, 130, 246, 0.05); /* Delikatne podświetlenie wiersza */
+}
+
+#taxCalendar > div {
+    animation: fadeIn 0.3s ease-out;
+}
+
+#taxCalendar .current-month {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Style dla terminu upływającego dzisiaj */
+.deadline-today {
+    position: relative;
+    overflow: hidden;
+}
+
+.deadline-today::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #ef4444;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    #hero h1 {
+        font-size: 2rem;
+    }
+    
+    #hero p {
+        font-size: 1.1rem;
+    }
+
+    .service-card {
+        margin-bottom: 1rem;
+    }
+
+    .map-container iframe {
+        height: 200px;
+    }
+}
+
+section {
+    scroll-margin-top: 70px; /* Dopasuj do wysokości nawigacji */
+}
+
+.bg-red-50 {
+    background-color: #ffe5e5;
+}
+.border-red-500 {
+    border-color: #f56565;
+}
+.bg-yellow-50 {
+    background-color: #fefcbf;
+}
+.border-yellow-500 {
+    border-color: #ecc94b;
+}
+.opacity-60 {
+    opacity: 0.6;
+}
+.bg-gray-200 {
+    background-color: #e2e8f0;
+}
+.text-gray-600 {
+    color: #718096;
+}
+
+/* Sekcja kontaktu */
+#kontakt, #napisz-do-nas {
+    background-color: #f9fafb; /* Jasnoszary kolor tła */
+    padding: 4rem 0;
+}
+
+#kontakt h2, #napisz-do-nas h2 {
+    font-size: 2rem;
+    color: #070707; /* Niebieski kolor nagłówka */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#kontakt .map-container iframe, #napisz-do-nas .map-container iframe {
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb; /* Delikatna ramka wokół mapy */
+}
+
+#kontakt .flex.items-center img, #napisz-do-nas .flex.items-center img {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)); /* Cień dla ikon */
+}
+
+#kontakt .text-lg, #napisz-do-nas .text-lg {
+    line-height: 1.6;
+}
+
+#kontakt .font-semibold, #napisz-do-nas .font-semibold {
+    color: #1f2937; /* Ciemnoszary kolor tekstu */
+}
+
+#kontakt .text-blue-600, #napisz-do-nas .text-blue-600 {
+    color: #1f2937; /* Ciemnoszary kolor tekstu */
+}
+
+/* Lazy-loaded images */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+.today-date-highlight {
+    background-color: #ecfdf5; /* bardzo jasna zieleń */
+    border: 2px solid #34d399; /* jasnozielona obwódka */
+    border-left-width: 4px;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+}
+
+/* Styl dla formularza kontaktowego */
+input.error, textarea.error {
+    border-color: #f56565; /* Czerwony kolor obramowania w przypadku błędu */
+    background-color: #ffe5e5; /* Jasnoczerwone tło */
+}
+
+.error-message {
+    color: #f56565;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Styl dla wskaźnika ładowania */
+.loading {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid transparent;
+    border-top-color: #1e40af; /* Niebieski kolor */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Styl dla przycisku "Wyślij" */
+button[type="submit"] {
+    background-color: #1e40af; /* Niebieski kolor */
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+button[type="submit"]:hover {
+    background-color: #1e3a8a; /* Ciemniejszy niebieski kolor */
+    transform: translateY(-2px);
+}
+button[type="submit"]:disabled {
+    background-color: #cbd5e1; /* Szary kolor */
+    cursor: not-allowed;
+    transform: none;
+}
+button[type="submit"]:disabled:hover {
+    background-color: #cbd5e1; /* Szary kolor */
+    transform: none;
+}
+button[type="submit"]:disabled:active {
+    background-color: #cbd5e1; /* Szary kolor */
+    transform: none;
+}
+/* Styl dla przycisku "Zamknij" w menu mobilnym */
+button.close-menu {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #1e40af; /* Niebieski kolor */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+button.close-menu:hover {
+    color: #1e3a8a; /* Ciemniejszy niebieski kolor */
+    transform: scale(1.1);
+}
+button.close-menu:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.5); /* Niebieski cień */
+}
+button.close-menu:active {
+    transform: scale(0.95);
+}
+/* Styl dla przycisku "Zamknij" w menu mobilnym */
+button.close-menu {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #1e40af; /* Niebieski kolor */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+button.close-menu:hover {
+    color: #1e3a8a; /* Ciemniejszy niebieski kolor */
+    transform: scale(1.1);
+}
+button.close-menu:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.5); /* Niebieski cień */
+}
+button.close-menu:active {
+    transform: scale(0.95);
+}
+/* Styl dla przycisku "Zamknij" w menu mobilnym */
+button.close-menu {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #1e40af; /* Niebieski kolor */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Styl dla przycisku scroll-to-top */
+#scrollToTop {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    display: none;
+    background-color: #1e40af;
+    color: white;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+#scrollToTop:hover {
+    background-color: #1e3a8a;
+    transform: scale(1.1);
+}
+
+/* Styl dla loadera */
+button.loading::after {
+    content: '';
+    display: inline-block;
+    margin-left: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid transparent;
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

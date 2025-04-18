@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biuro Rachunkowe Nacz-Lex | Rokietnica</title>
+    <meta name="description" content="Biuro rachunkowe Rokietnica, księgowość JDG, obsługa MSP. Profesjonalne usługi księgowe dla firm i przedsiębiorców.">
+    <meta name="keywords" content="biuro rachunkowe, księgowość, rokietnica, podatki, rozliczenia, Nacz-Lex">
+    <meta name="theme-color" content="#1e40af">
+    <meta name="author" content="Cezary Król">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.nacz-lex.pl/">
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="Biuro Rachunkowe Nacz-Lex | Rokietnica">
+    <meta property="og:description" content="Profesjonalne usługi księgowe w Rokietnicy. Biuro rachunkowe Nacz-Lex oferuje kompleksową obsługę księgową dla firm i przedsiębiorców od 2005 roku.">
+    <meta property="og:image" content="https://www.nacz-lex.pl/img/logo_puh_final.png">
+    <meta property="og:url" content="https://www.nacz-lex.pl/">
+    <meta property="og:type" content="website">
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Biuro Rachunkowe Nacz-Lex | Rokietnica">
+    <meta name="twitter:description" content="Profesjonalne usługi księgowe w Rokietnicy. Biuro rachunkowe Nacz-Lex oferuje kompleksową obsługę księgową dla firm i przedsiębiorców od 2005 roku.">
+    <meta name="twitter:image" content="https://www.nacz-lex.pl/img/logo_puh_final.png">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Poprawiony skrypt reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onloadCallback" async defer></script>
+    <script src="scripts.js" defer></script>
+    <!-- Skrypty reCAPTCHA i główny skrypt JavaScript -->
+    <style>
+        /* Poprawa kontrastu kolorów */
+        .text-blue-300:hover {
+            color: #1e90ff; /* Zwiększony kontrast dla linków */
+        }
+        .bg-blue-900 {
+            background-color: #003366; /* Zwiększony kontrast dla tła */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Struktura danych schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "AccountingService",
+        "name": "Biuro Rachunkowe Nacz-Lex",
+        "description": "Profesjonalne usługi księgowe w Rokietnicy. Biuro rachunkowe Nacz-Lex oferuje kompleksową obsługę księgową dla firm i przedsiębiorców od 2005 roku.",
+        "url": "https://www.nacz-lex.pl/",
+        "logo": "https://www.nacz-lex.pl/img/logo_puh_final.png",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "ul. Koszycy 23",
+            "addressLocality": "Rokietnica",
+            "postalCode": "62-090",
+            "addressCountry": "PL"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+48 123 456 789",
+            "contactType": "customer service"
+        }
+    }
+    </script>
+
+    <!-- Nawigacja -->
+    <nav class="bg-blue-800 text-white fixed w-full z-50 shadow-lg" aria-label="Główna nawigacja">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="#hero" class="text-xl font-bold" aria-label="Przejdź do sekcji Hero">
+                    Biuro Rachunkowe - Nacz-Lex
+                </a>
+                <button id="menuBtn" class="md:hidden text-2xl focus:outline-none" aria-label="Otwórz menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- Przycisk otwierający menu mobilne -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#o-nas" class="hover:text-blue-300 transition" aria-label="Przejdź do sekcji O nas">O nas</a>
+                    <a href="#uslugi" class="hover:text-blue-300 transition" aria-label="Przejdź do sekcji Usługi">Usługi</a>
+                    <a href="#aktualnosci" class="hover:text-blue-300 transition" aria-label="Przejdź do sekcji Aktualności">Aktualności</a>
+                    <a href="#opinie" class="hover:text-blue-300 transition" aria-label="Przejdź do sekcji Opinie">Opinie</a>
+                    <a href="#faq" class="hover:text-blue-300 transition" aria-label="Przejdź do sekcji FAQ">FAQ</a>
+                    <a href="#kontakt" class="hover:text-blue-300 transition" aria-label="Przejdź do sekcji Kontakt">Kontakt</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden fixed inset-0 bg-black/50 z-40 transform transition-transform duration-300 hidden -translate-x-full" inert>
+        <!-- Menu mobilne -->
+        <div class="bg-white max-h-screen overflow-y-auto w-3/4 p-6 rounded-r-lg">
+            <button class="close-btn text-2xl mb-4" aria-label="Zamknij menu">×</button>
+            <nav class="space-y-4 text-gray-800">
+                <a href="#hero" class="block" aria-label="Przejdź do sekcji Hero">Strona Główna</a>
+                <a href="#o-nas" class="block" aria-label="Przejdź do sekcji O nas">O nas</a>
+                <a href="#uslugi" class="block" aria-label="Przejdź do sekcji Usługi">Usługi</a>
+                <a href="#aktualnosci" class="block" aria-label="Przejdź do sekcji Aktualności">Aktualności</a>
+                <a href="#opinie" class="block" aria-label="Przejdź do sekcji Opinie">Opinie</a>
+                <a href="#faq" class="block" aria-label="Przejdź do sekcji FAQ">FAQ</a>
+                <a href="#kontakt" class="block" aria-label="Przejdź do sekcji Kontakt">Kontakt</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Sekcja Hero -->
+    <section id="hero" class="pt-32 pb-20 bg-blue-900 text-white">
+        <!-- Sekcja powitalna z nagłówkiem i przyciskiem -->
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">Profesjonalne Usługi Księgowe</h1>
+            <p class="text-xl md:text-2xl mb-8">Zaufaj specjalistom z 18-letnim doświadczeniem</p>
+            <a href="#kontakt" class="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition" aria-label="Przejdź do sekcji Kontakt">
+                Napisz do Nas
+            </a>
+        </div>
+    </section>
+
+    <!-- Sekcja O nas -->
+    <section id="o-nas" class="py-16 bg-white">
+        <!-- Informacje o firmie -->
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">O nas</h2>
+            <div class="max-w-2xl mx-auto text-gray-600">
+                <p class="mb-4">Biuro Rachunkowe Nacz-Lex działa na rynku od 2005 roku. Przez te lata zdobyliśmy zaufanie setek klientów, oferując profesjonalne usługi księgowe, doradztwo podatkowe oraz wsparcie w zarządzaniu finansami firm.</p>
+                <p class="mb-4">Nasz zespół składa się z doświadczonych księgowych. Działamy głównie na terenie Gminy Rokietnica, ale obsługujemy również klientów z całej Wielkopolski.</p>
+                <p class="mb-4">Wierzymy, że kluczem do sukcesu jest indywidualne podejście do każdego klienta. Dlatego oferujemy spersonalizowane rozwiązania, które są dostosowane do specyfiki działalności naszych klientów.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja Usługi -->
+    <section id="uslugi" class="py-16 bg-gray-50">
+        <!-- Lista oferowanych usług -->
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Nasze Usługi</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="service-card p-6 border rounded-lg hover:shadow-xl transition-all duration-300">
+                    <h3 class="text-xl font-semibold mb-4">Księgowość JDG</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" alt="Ikona: Ewidencja przychodów i rozchodów" loading="lazy">
+                            Ewidencja przychodów i rozchodów
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" loading="lazy">
+                            Rozliczenia podatkowe
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" loading="lazy">
+                            Prowadzenie KPiR
+                        </li>
+                    </ul>
+                </div>
+                <div class="service-card p-6 border rounded-lg hover:shadow-xl transition-all duration-300">
+                    <h3 class="text-xl font-semibold mb-4">Księgowość dla MSP</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" loading="lazy">
+                            Obsługa kadrowo-płacowa
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" loading="lazy">
+                            Sporządzanie i wysyłka deklaracji VAT i JPK_V7
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" loading="lazy">
+                            Rozliczenia ZUS i PIT
+                        </li>
+                    </ul>
+                </div>
+                <div class="service-card p-6 border rounded-lg hover:shadow-xl transition-all duration-300">
+                    <h3 class="text-xl font-semibold mb-4">Doradztwo Podatkowe</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" loading="lazy">
+                            Optymalizacja podatkowa
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" loading="lazy">
+                            Konsultacje podatkowe
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <img src="img/icons/check-square.svg" class="w-5 h-5 text-blue-600" loading="lazy">
+                            Reprezentacja przed urzędami
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja Aktualności -->
+    <section id="aktualnosci" class="py-16 bg-white">
+        <!-- Aktualności i komunikaty -->
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Aktualności</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Aktualność 1 – Wielkanocne życzenia -->
+                <div class="bg-yellow-50 p-6 rounded-lg shadow border border-yellow-200">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center gap-2 text-yellow-800">
+                        🐣 WIELKANOC 🐣
+                    </h3>
+                    <div class="flex items-start gap-4">
+                        <div>
+                            <p class="text-gray-700 mb-4">
+                                Z okazji nadchodzących Świąt Wielkanocnych składamy Państwu 🌷 serdeczne życzenia zdrowia, spokoju i radości w gronie najbliższych. Niech ten wyjątkowy czas przyniesie wytchnienie, dobrą energię i same pozytywne chwile – zarówno w życiu osobistym, jak i zawodowym.
+                            </p>
+                            <p class="text-red-700 font-semibold">
+                                ⚠️ Uwaga: w dniu <strong>21 kwietnia 2025 r.</strong> nasze biuro rachunkowe będzie <strong>nieczynne</strong>. Zapraszamy do kontaktu w kolejnych dniach roboczych.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aktualność 2 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-4">Nowy JPK_VAT od kwietnia 2025</h3>
+                    <p class="text-gray-600 mb-4">Ministerstwo Finansów opublikowało nowy schemat JPK_VAT. Wymóg stosowania od 1.04.2025 (Komunikat MF z 10.01.2025).</p>
+                    <a href="https://www.gov.pl/web/finanse/jpk-vat-od-2025" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="text-blue-600 hover:underline flex items-center">
+                        Źródło: Gov.pl
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Aktualność 3 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold mb-4">Program "Ulga na Start 2025"</h3>
+                    <p class="text-gray-600 mb-4">Nabór wniosków od 1 marca 2025. Dotacja do 50 000 zł dla firm działających do 2 lat (Rozporządzenie MRPiT z 20.12.2024).</p>
+                    <a href="https://www.gov.pl/web/rozwoj-technologia/ulga-na-start" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="text-blue-600 hover:underline flex items-center">
+                        Szczegóły: Gov.pl
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja Terminarz Podatkowy -->
+    <section id="terminarz" class="py-16 bg-gray-50">
+        <!-- Kalendarz podatkowy generowany przez JavaScript -->
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Terminarz Podatkowy 2025</h2>
+            <p id="todayDate" class="text-center text-gray-500 mb-4"></p>
+            <div id="taxCalendar" class="mx-auto max-w-2xl">
+                <!-- Zawartość kalendarza będzie generowana przez JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Opinie Klientów -->
+    <section id="opinie" class="py-16 bg-white">
+        <!-- Opinie klientów generowane przez JavaScript -->
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Opinie Naszych Klientów</h2>
+            <div class="grid md:grid-cols-2 gap-6" id="reviewsContainer"></div>
+        </div>
+    </section>
+
+    <!-- Sekcja FAQ -->
+    <section id="faq" class="py-16 bg-gray-50">
+        <!-- Najczęściej zadawane pytania -->
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Najczęstsze Pytania</h2>
+            <div class="max-w-2xl mx-auto space-y-4">
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold" aria-label="Jak rozpocząć współpracę?">
+                            <span>Jak rozpocząć współpracę?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">Skontaktuj się z nami telefonicznie lub przez formularz kontaktowy. Przygotujemy indywidualną ofertę dostosowaną do Twoich potrzeb.</p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Jakie dokumenty są potrzebne do rozpoczęcia współpracy?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">Wystarczy dostarczyć podstawowe dane firmy (NIP, REGON), dokument założycielski oraz ostatnią deklarację podatkową. Pomagamy w kompletowaniu dokumentacji!</p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Czy obsługujecie firmy spoza Gminy Rokietnica?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">Tak! Dzięki zdalnej współpracy obsługujemy klientów z całej Wielkopolski. Wszystkie formalności można załatwić online lub pocztą.</p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Co w przypadku kontroli skarbowej?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">Zapewniamy pełne wsparcie podczas kontroli - od przygotowania dokumentacji po reprezentację przed urzędem. Nasze usługi obejmują również pomoc w ewentualnych odwołaniach.</p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Ile kosztuje obsługa księgowa?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">
+                            Każdy biznes jest inny – dlatego nasze ceny są dostosowywane indywidualnie do potrzeb i specyfiki działalności klienta. 
+                            Skontaktuj się z nami lub odwiedź nasze biuro w Rokietnicy, a przygotujemy dla Ciebie bezpłatną wycenę i propozycję współpracy dopasowaną do Twoich oczekiwań. 
+                            Stawiamy na przejrzystość, elastyczność i długofalowe relacje biznesowe.
+                        </p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Czy mogę przesyłać dokumenty online, czy muszę je dostarczać osobiście?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">Dokumenty można przesyłać wygodnie drogą mailową lub przez chmurę (np. OneDrive, Google Drive). Nie ma konieczności wizyt osobistych, choć są one oczywiście możliwe.</p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Czy pomagają Państwo przy zakładaniu działalności gospodarczej?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">Tak, wspieramy naszych klientów w całym procesie zakładania działalności — od wyboru formy opodatkowania po rejestrację w CEIDG, ZUS i urzędzie skarbowym.</p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Jak długo trwa założenie firmy z Waszą pomocą?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">W większości przypadków rejestracja działalności gospodarczej przez CEIDG trwa 1 dzień roboczy. Pomagamy przygotować wszystkie potrzebne dokumenty i przeprowadzamy przez proces krok po kroku.</p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Czy przypominają Państwo o ważnych terminach podatkowych?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">Tak, nasi klienci regularnie otrzymują przypomnienia o zbliżających się terminach płatności i złożenia deklaracji. Z nami niczego nie przegapisz.</p>
+                    </details>
+                </div>
+
+                <div class="faq-item bg-white p-4 rounded-lg shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center cursor-pointer font-semibold">
+                            <span>Z jakiego oprogramowania korzysta biuro rachunkowe?</span>
+                            <span class="transform group-open:rotate-180 transition">▼</span>
+                        </summary>
+                        <p class="mt-2 text-gray-600">
+                            Korzystamy z licencjonowanego programu <strong>Comarch ERP Optima</strong> – najpopularniejszego i jednego z najbardziej zaawansowanych systemów do obsługi księgowości w Polsce. 
+                            To profesjonalne narzędzie dedykowane biurom rachunkowym, umożliwiające m.in. kompleksową obsługę KPiR, ryczałtu, VAT, ZUS oraz kadrowo-płacową.
+                        </p>
+                    </details>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja Kontakt -->
+    <section id="kontakt" class="py-16 bg-gray-50">
+        <!-- Informacje kontaktowe i mapa -->
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-blue-800 mb-12">Kontakt</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Informacje kontaktowe -->
+                <div class="space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <img src="img/icons/map-marker.svg" class="w-8 h-8 text-blue-600" alt="Ikona lokalizacji" loading="lazy">
+                            <p class="text-lg text-gray-700">
+                                PUH Jotter Jarosław Król Biuro Rachunkowe Nacz-Lex<br>
+                                ul. Koszycy 23<br>
+                                62-090 Rokietnica
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="img/icons/phone.svg" class="w-8 h-8 text-blue-600" alt="Telefon" loading="lazy">
+                            <p class="text-lg text-gray-700 font-semibold">+48 123 456 789</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="img/icons/email.svg" class="w-8 h-8 text-blue-600" alt="E-mail" loading="lazy">
+                            <p class="text-lg text-gray-700 font-semibold">jotter@wp.pl</p>
+                        </div>
+                        <div class="mt-6">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Godziny otwarcia:</h3>
+                            <p class="text-lg text-gray-700">Poniedziałek – Piątek: 8:00 – 16:00</p>
+                            <p class="text-sm text-gray-500 mt-2"></p>
+                                W okresie świątecznym godziny pracy mogą ulec zmianie. Kliknij poniżej, aby sprawdzić szczegóły:
+                            </p>
+                            <a href="#aktualnosci" class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                Przejdź do Aktualności
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Mapa -->
+                <div class="map-container rounded-lg overflow-hidden shadow-lg">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2433.307325671417!2d16.74553931580377!3d52.37366797979135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470444c5f3f0a9a3%3A0x6d4b1f7e079b4d4e!2sKoszycy%2023%2C%2062-090%20Rokietnica!5e0!3m2!1spl!2spl!4v1622023722205!5m2!1spl!2spl" 
+                        width="100%" 
+                        height="300" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        aria-label="Mapa lokalizacji biura"
+                        aria-hidden="false"
+                        tabindex="0">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja Napisz do Nas -->
+    <section id="napisz-do-nas" class="py-16 bg-white">
+        <!-- Formularz kontaktowy -->
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-blue-800 mb-12">Napisz do Nas</h2>
+            <div class="bg-gray-50 p-8 rounded-lg shadow-lg w-full">
+                <form id="contactForm" action="form.php" method="POST" class="space-y-4">
+                    <input type="text" name="name" placeholder="Imię i nazwisko" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                    <input type="email" name="email" placeholder="Email" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                    <textarea name="message" rows="5" placeholder="Treść wiadomości" 
+                              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required></textarea>
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                    
+                    <!-- Zgoda RODO -->
+                    <div class="flex items-start mt-4">
+                        <input type="checkbox" id="rodo_agreement" name="rodo_agreement" class="mt-1" required>
+                        <label for="rodo_agreement" class="ml-2 text-sm text-gray-600">
+                            Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w związku z wysłaniem zapytania przez formularz kontaktowy.
+                        </label>
+                    </div>
+                    
+                    <div id="recaptcha" class="g-recaptcha" data-sitekey="your-site-key"></div>
+                    
+                    <button type="submit" 
+                            class="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                        Wyślij wiadomość
+                    </button>
+                </form>
+                <div id="formStatus" class="mt-4 text-center"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Przycisk Scroll-to-Top -->
+    <button id="scrollToTop" class="fixed bottom-4 right-4 bg-blue-800 text-white p-3 rounded-full shadow-lg hidden"
+            aria-label="Przewiń do góry">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Stopka -->
+    <footer class="bg-gray-800 text-white py-6">
+        <!-- Informacje o prawach autorskich -->
+        <div class="container mx-auto px-4 text-center"> <!-- Dodano text-center -->
+            <p>© 2025 PUH Jotter Jarosław Król Biuro Rachunkowe Nacz-Lex</p>
+            <p>Wszelkie prawa zastrzeżone.</p>
+            <p class="mt-2">
+                Projekt przygotował 
+                <a href="https://pl.linkedin.com" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline" aria-label="Profil LinkedIn Cezarego Króla">
+                    Cezary Król
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Skrypt reCAPTCHA -->
+    <script>
+        var onloadCallback = function() {
+            grecaptcha.render('recaptcha', {
+                'sitekey': '6LexampleXXXXXXXXXXXXXXXX', // Klucz sitekey reCAPTCHA
+                'callback': onCaptchaSuccess
+            });
+        };
+
+        function onCaptchaSuccess(token) {
+            document.getElementById('contactForm').submit(); // Automatyczne przesłanie formularza po weryfikacji
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Obsługa płynnego przewijania do sekcji
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70, // Uwzględnienie wysokości nawigacji
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
