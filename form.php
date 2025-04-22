@@ -6,6 +6,10 @@ header("Content-Security-Policy: default-src 'self'; script-src 'self' https://w
 header("X-XSS-Protection: 1; mode=block");
 header("X-Content-Type-Options: nosniff");
 
+error_log("RECAPTCHA_SECRET_KEY: " . getenv('RECAPTCHA_SECRET_KEY'));
+
+error_log("RECAPTCHA_SECRET_KEY: " . getenv('RECAPTCHA_SECRET_KEY'));
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header('Content-Type: application/json');
 
@@ -57,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Wysłanie wiadomości e-mail
-        $to = "jotter@wp.pl";
+        $to = "naczlex@wp.pl";
         $subject = "Nowa wiadomość od $name";
         $message = "Imię i nazwisko: $name\nEmail: $email\n\nWiadomość:\n$message_text";
         $headers = "From: $email";
@@ -89,4 +93,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: index.html"); // Przekierowanie na stronę główną, jeśli metoda żądania nie jest POST
     exit;
 }
+
+function onCaptchaError() {
+    alert("Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.");
+}
+
+fetch('form.php', {
+    method: 'POST',
+    body: new FormData(document.getElementById('contactForm'))
+})
+.then(response => response.json())
+.then(data => {
+    if (data.status === 'success') {
+        alert(data.message);
+    } else {
+        alert(data.message);
+    }
+})
+.catch(error => {
+    alert("Wystąpił błąd. Spróbuj ponownie.");
+});
 ?>

@@ -396,34 +396,39 @@
                 <div class="space-y-6">
                     <div class="space-y-4">
                         <div class="flex items-center gap-4">
-                            <img src="img/icons/map-marker.svg" class="w-8 h-8 text-blue-600" alt="Ikona lokalizacji" loading="lazy">
-                            <p class="text-lg text-gray-700">
-                                PUH Jotter Jarosław Król Biuro Rachunkowe Nacz-Lex<br>
-                                ul. Koszycy 23<br>
-                                62-090 Rokietnica
+                            <img src="img/icons/map-marker.svg" class="w-8 h-8 text-blue-600" alt="Ikona lokalizacji" title="Lokalizacja" loading="lazy">
+                            <div>
+                                <p class="text-xl text-gray-800 font-bold">PUH Jotter Jarosław Król</p>
+                                <p class="text-lg text-gray-700">Biuro Rachunkowe Nacz-Lex</p>
+                                <p class="text-lg text-gray-700">ul. Koszycy 23</p>
+                                <p class="text-lg text-gray-700">62-090 Rokietnica</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="img/icons/phone.svg" class="w-8 h-8 text-blue-600" alt="Telefon" title="Zadzwoń" loading="lazy">
+                            <div>
+                                <p class="text-lg text-gray-700 font-semibold">
+                                    <a href="tel:+48618145401">Stacjonarny: +48 61 8145 401</a>
+                                </p>
+                                <p class="text-lg text-gray-700 font-semibold">
+                                    <a href="tel:+48504234424">Komórkowy: +48 504 234 424</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="img/icons/email.svg" class="w-8 h-8 text-blue-600" alt="E-mail" title="Wyślij e-mail" loading="lazy">
+                            <p class="text-lg text-gray-700 font-semibold">
+                                <a href="mailto:naczlex@wp.pl" class="hover:underline text-blue-600">naczlex@wp.pl</a>
                             </p>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <img src="img/icons/phone.svg" class="w-8 h-8 text-blue-600" alt="Telefon" loading="lazy">
-                            <p class="text-lg text-gray-700 font-semibold">+48 123 456 789</p>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <img src="img/icons/email.svg" class="w-8 h-8 text-blue-600" alt="E-mail" loading="lazy">
-                            <p class="text-lg text-gray-700 font-semibold">jotter@wp.pl</p>
                         </div>
                         <div class="mt-6">
                             <h3 class="text-xl font-semibold text-gray-800 mb-2">Godziny otwarcia:</h3>
                             <p class="text-lg text-gray-700">Poniedziałek – Piątek: 8:00 – 16:00</p>
-                            <p class="text-sm text-gray-500 mt-2"></p>
-                                W okresie świątecznym godziny pracy mogą ulec zmianie. Kliknij poniżej, aby sprawdzić szczegóły:
-                            </p>
-                            <a href="#aktualnosci" class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                                Przejdź do Aktualności
-                            </a>
+                            <p class="text-sm text-gray-500 mt-2">W okresie świątecznym godziny pracy mogą ulec zmianie. Kliknij poniżej, aby sprawdzić szczegóły:</p>
+                            <a href="#aktualnosci" class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Przejdź do Aktualności</a>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Mapa -->
                 <div class="map-container rounded-lg overflow-hidden shadow-lg">
@@ -449,30 +454,34 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-12">Napisz do Nas</h2>
             <div class="bg-gray-50 p-8 rounded-lg shadow-lg w-full">
-                <form id="contactForm" action="form.php" method="POST" class="space-y-4">
-                    <input type="text" name="name" placeholder="Imię i nazwisko" 
-                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                    <input type="email" name="email" placeholder="Email" 
-                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                    <textarea name="message" rows="5" placeholder="Treść wiadomości" 
-                              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required></textarea>
-                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                    
-                    <!-- Zgoda RODO -->
-                    <div class="flex items-start mt-4">
-                        <input type="checkbox" id="rodo_agreement" name="rodo_agreement" class="mt-1" required>
-                        <label for="rodo_agreement" class="ml-2 text-sm text-gray-600">
-                            Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w związku z wysłaniem zapytania przez formularz kontaktowy.
-                        </label>
-                    </div>
-                    
-                    <div id="recaptcha" class="g-recaptcha" data-sitekey="your-site-key"></div>
-                    
-                    <button type="submit" 
-                            class="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-900 transition-colors">
-                        Wyślij wiadomość
-                    </button>
-                </form>
+                <div x-data="{ loading: false, success: false, error: false }">
+                    <form @submit.prevent="loading = true; setTimeout(() => { loading = false; success = true }, 2000)" class="space-y-4">
+                        <input type="text" name="name" placeholder="Imię i nazwisko" 
+                               class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <input type="email" name="email" placeholder="Email" 
+                               class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                        <textarea name="message" rows="5" placeholder="Treść wiadomości" 
+                                  class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required></textarea>
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                        
+                        <!-- Zgoda RODO -->
+                        <div class="flex items-start mt-4">
+                            <input type="checkbox" id="rodo_agreement" name="rodo_agreement" class="mt-1" required>
+                            <label for="rodo_agreement" class="ml-2 text-sm text-gray-600">
+                                Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w związku z wysłaniem zapytania przez formularz kontaktowy.
+                            </label>
+                        </div>
+                        
+                        <div id="recaptcha" class="g-recaptcha" data-sitekey="your-site-key"></div>
+                        
+                        <button type="submit" class="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                            <span x-show="!loading">Wyślij wiadomość</span>
+                            <span x-show="loading" class="loading"></span>
+                        </button>
+                        <p x-show="success" class="text-green-600" aria-live="polite">Wiadomość wysłana pomyślnie!</p>
+                        <p x-show="error" class="text-red-600" aria-live="polite">Wystąpił błąd. Spróbuj ponownie.</p>
+                    </form>
+                </div>
                 <div id="formStatus" class="mt-4 text-center"></div>
             </div>
         </div>
@@ -492,7 +501,7 @@
             <p>Wszelkie prawa zastrzeżone.</p>
             <p class="mt-2">
                 Projekt przygotował 
-                <a href="https://pl.linkedin.com" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline" aria-label="Profil LinkedIn Cezarego Króla">
+                <a href="https://www.linkedin.com/in/cezary-król/" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline" aria-label="Profil LinkedIn Cezarego Króla">
                     Cezary Król
                 </a>
             </p>
@@ -532,5 +541,15 @@
             });
         });
     </script>
+
+    <!-- Przycisk zmiany trybu -->
+    <div class="flex justify-end p-4">
+        <button @click="darkMode = !darkMode" x-data="{ darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches }" 
+                :class="{ 'bg-gray-800 text-white': darkMode, 'bg-gray-200 text-black': !darkMode }" 
+                class="p-2 rounded">
+            <span x-show="!darkMode">🌞 Jasny</span>
+            <span x-show="darkMode">🌙 Ciemny</span>
+        </button>
+    </div>
 </body>
 </html>

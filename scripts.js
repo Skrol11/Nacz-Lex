@@ -430,17 +430,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Płynne przewijanie do sekcji
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        link.addEventListener('click', function (e) {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 70, // Dopasuj offset dla sticky nawigacji
-                    behavior: 'smooth'
-                });
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
@@ -509,4 +504,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         taxCalendar.parentElement.insertBefore(filterContainer, taxCalendar);
     }
+
+    // Obsługa wysyłania formularza kontaktowego
+    document.getElementById('contactForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        submitBtn.disabled = true;
+        spinner.classList.remove('hidden');
+        // Symulacja wysyłania formularza
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            spinner.classList.add('hidden');
+            alert('Wiadomość wysłana!');
+        }, 2000);
+    });
 });
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('themeSwitcher', () => ({
+        darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
+        toggle() {
+            this.darkMode = !this.darkMode;
+            document.documentElement.classList.toggle('dark', this.darkMode);
+        }
+    }));
+});
+
+function onCaptchaError() {
+    alert("Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.");
+}
