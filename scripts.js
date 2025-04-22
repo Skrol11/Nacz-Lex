@@ -379,16 +379,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Obsługa formularza kontaktowego
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
-    const spinner = document.getElementById('spinner');
     const formStatus = document.getElementById('formStatus');
 
-    if (!contactForm) return; // Jeśli formularz nie istnieje, zakończ
+    // Sprawdź, czy formularz istnieje
+    if (!contactForm) {
+        console.error('Formularz kontaktowy nie został znaleziony.');
+        return; // Zakończ działanie, jeśli formularz nie istnieje
+    }
 
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        formStatus.textContent = ''; // Wyczyść poprzedni status
-        spinner.classList.remove('hidden'); // Pokaż spinner
-        submitBtn.disabled = true; // Zablokuj przycisk
+
+        // Sprawdź, czy przycisk i status istnieją
+        if (formStatus) formStatus.textContent = ''; // Wyczyść poprzedni status
+        if (submitBtn) submitBtn.disabled = true; // Zablokuj przycisk
 
         fetch('form.php', {
             method: 'POST',
@@ -396,24 +400,40 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(data => {
-            spinner.classList.add('hidden'); // Ukryj spinner
-            submitBtn.disabled = false; // Odblokuj przycisk
+            if (submitBtn) submitBtn.disabled = false; // Odblokuj przycisk
 
             if (data.status === 'success') {
-                formStatus.textContent = 'Wiadomość została wysłana pomyślnie!';
-                formStatus.className = 'text-green-600';
+                if (formStatus) {
+                    formStatus.textContent = 'Wiadomość została wysłana pomyślnie!';
+                    formStatus.className = 'text-green-600';
+                }
                 contactForm.reset(); // Wyczyść formularz
             } else {
-                formStatus.textContent = data.message || 'Wystąpił błąd. Spróbuj ponownie.';
-                formStatus.className = 'text-red-600';
+                if (formStatus) {
+                    formStatus.textContent = data.message || 'Wystąpił błąd. Spróbuj ponownie.';
+                    formStatus.className = 'text-red-600';
+                }
             }
         })
         .catch(() => {
-            spinner.classList.add('hidden'); // Ukryj spinner
-            submitBtn.disabled = false; // Odblokuj przycisk
-            formStatus.textContent = 'Wystąpił błąd. Spróbuj ponownie.';
-            formStatus.className = 'text-red-600';
+            if (submitBtn) submitBtn.disabled = false; // Odblokuj przycisk
+            if (formStatus) {
+                formStatus.textContent = 'Wystąpił błąd. Spróbuj ponownie.';
+                formStatus.className = 'text-red-600';
+            }
         });
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+
+        // Symulacja wysyłania formularza
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            alert('Wiadomość wysłana!');
+        }, 2000);
     });
 
     // Zakomentowano grecaptcha.render i grecaptcha.execute
@@ -623,6 +643,6 @@ document.addEventListener('DOMContentLoaded', () => {
 //     return false;
 // }
 
-function onCaptchaError() {
-    alert("Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.");
-}
+//function onCaptchaError() {
+//    alert("Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.");
+//}

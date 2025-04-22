@@ -1,4 +1,14 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
+
+require 'vendor/autoload.php';
+
+// Załaduj zmienne środowiskowe z pliku .env
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',
@@ -9,19 +19,12 @@ session_set_cookie_params([
 ]);
 session_start();
 
-// Dodanie nagłówków zabezpieczających
 header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self';");
 header("X-XSS-Protection: 1; mode=block");
 header("X-Content-Type-Options: nosniff");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header('Content-Type: application/json');
-
-    // Zakomentowano walidację CSRF
-    // if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-    //     echo json_encode(["status" => "error", "message" => "Nieprawidłowy token CSRF."]);
-    //     exit;
-    // }
 
     // Sprawdzenie zgody RODO
     if (!isset($_POST['rodo_agreement']) || $_POST['rodo_agreement'] != 'on') {
@@ -44,16 +47,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Wysłanie wiadomości e-mail
-    $to = "naczlex@wp.pl";
-    $subject = "Nowa wiadomość od $name";
-    $message = "Imię i nazwisko: $name\nEmail: $email\n\nWiadomość:\n$message_text";
-    $headers = "From: $email";
+    // Konfiguracja PHPMailer
+    $mail = new PHPMailer(true);
 
-    if (mail($to, $subject, $message, $headers)) {
+    try {
+        // Ustawienia serwera SMTP
+        $mail->isSMTP();
+        $mail->Host = 'smtp.wp.pl'; // Serwer SMTP WP
+        $mail->SMTPAuth = true;
+        $mail->Username = 'naczlex@wp.pl'; // Twój adres e-mail
+        $mail->Password = $_ENV['SMTP_PASSWORD']; // Pobierz hasło z pliku .env
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Szyfrowanie SSL
+        $mail->Port = 465; // Port SMTP
+
+        // Debugowanie SMTP
+        $mail->SMTPDebug = 2; // Ustaw poziom debugowania (2 = szczegółowe informacje)
+        $mail->Debugoutput = 'html'; // Wyświetlaj debugowanie w formacie HTML
+
+        // Nadawca i odbiorca
+        $mail->setFrom('naczlex@wp.pl', 'Nacz-Lex'); // Nadawca
+        $mail->addAddress('naczlex@wp.pl'); // Odbiorca
+
+        // Treść wiadomości
+        $mail->isHTML(false);
+        $mail->Subject = "Nowa wiadomość od $name";
+        $mail->Body = "Imię i nazwisko: $name\nEmail: $email\n\nWiadomość:\n$message_text";
+
+        // Test połączenia z serwerem SMTP
+        try {
+            $mail->smtpConnect([
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true,
+                ],
+            ]);
+            echo json_encode(["status" => "success", "message" => "Połączenie z serwerem SMTP działa poprawnie."]);
+        } catch (Exception $e) {
+            echo json_encode(["status" => "error", "message" => "Błąd połączenia z serwerem SMTP: " . $mail->ErrorInfo]);
+            exit;
+        }
+
+        // Wyślij wiadomość
+        $mail->send();
         echo json_encode(["status" => "success", "message" => "Wiadomość została wysłana pomyślnie."]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "Wystąpił błąd podczas wysyłania wiadomości."]);
+    } catch (Exception $e) {
+        // Logowanie szczegółowych błędów
+        error_log("Błąd PHPMailer: " . $mail->ErrorInfo);
+        echo json_encode(["status" => "error", "message" => "Wystąpił błąd podczas wysyłania wiadomości: " . $mail->ErrorInfo]);
     }
 } else {
     header("Location: index.html");
