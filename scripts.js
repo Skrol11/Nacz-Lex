@@ -10,16 +10,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Generowanie opinii klientów
     const reviews = [
         {
-            name: "Jan Kowalski",
-            text: "Profesjonalne podejście i terminowość. Polecam!",
-            stars: 5
+        name: "Jan Kowalski",
+        text: "Profesjonalne podejście i terminowość. Polecam!",
+        stars: 5
         },
         {
-            name: "Anna Nowak",
-            text: "Świetna obsługa i indywidualne podejście do klienta.",
-            stars: 5
+        name: "Anna Nowak",
+        text: "Świetna obsługa i indywidualne podejście do klienta.",
+        stars: 5
+        },
+        {
+        name: "Jakub Piszora, właściciel firmy: SZYBKA SKRZYNKA",
+        text: "Pan Jarosław Król był nieocenionym wsparciem przy zakładaniu mojej działalności. Dzięki jego pomocy zrozumiałem wiele zawiłości prowadzenia jednoosobowej firmy. Profesjonalizm i cierpliwość na najwyższym poziomie.",
+        stars: 5
+        },
+        {
+        name: "Jan Nowak",
+        text: "Dzięki Biuru Rachunkowemu Nacz-Lex mam pewność, że wszystkie sprawy księgowe są prowadzone rzetelnie i terminowo. To dla mnie ogromne wsparcie w codziennej pracy na gospodarstwie.",
+        stars: 5
+        },
+        {
+        name: "Anna Kowalska",
+        text: "Współpraca z Nacz-Lex to czysta przyjemność. Profesjonalna obsługa, szybkie odpowiedzi na pytania i pełne zaangażowanie w sprawy mojej firmy. Polecam każdemu przedsiębiorcy.",
+        stars: 5
+        },
+        {
+        name: "Tomasz Wiśniewski",
+        text: "Biuro Rachunkowe Nacz-Lex to partner godny zaufania. Dzięki ich wsparciu mogę skupić się na rozwoju firmy, mając pewność, że kwestie księgowe są w najlepszych rękach.",
+        stars: 5
         }
     ];
+  
 
     const reviewsContainer = document.getElementById('reviewsContainer');
     if (reviewsContainer) {
@@ -379,6 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Obsługa formularza kontaktowego
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
     const formStatus = document.getElementById('formStatus');
 
     // Sprawdź, czy formularz istnieje
@@ -390,17 +412,25 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Sprawdź, czy przycisk i status istnieją
+        // Sprawdź, czy przycisk, spinner i status istnieją
         if (formStatus) formStatus.textContent = ''; // Wyczyść poprzedni status
         if (submitBtn) submitBtn.disabled = true; // Zablokuj przycisk
+        if (spinner) spinner.classList.remove('hidden'); // Pokaż spinner
 
         fetch('form.php', {
             method: 'POST',
             body: new FormData(contactForm)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log('Success:', data);
             if (submitBtn) submitBtn.disabled = false; // Odblokuj przycisk
+            if (spinner) spinner.classList.add('hidden'); // Ukryj spinner
 
             if (data.status === 'success') {
                 if (formStatus) {
@@ -415,70 +445,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         })
-        .catch(() => {
+        .catch(error => {
+            console.error('Error:', error);
             if (submitBtn) submitBtn.disabled = false; // Odblokuj przycisk
+            if (spinner) spinner.classList.add('hidden'); // Ukryj spinner
             if (formStatus) {
                 formStatus.textContent = 'Wystąpił błąd. Spróbuj ponownie.';
                 formStatus.className = 'text-red-600';
             }
         });
     });
-
-    document.getElementById('contactForm').addEventListener('submit', e => {
-        e.preventDefault();
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-
-        // Symulacja wysyłania formularza
-        setTimeout(() => {
-            submitBtn.disabled = false;
-            alert('Wiadomość wysłana!');
-        }, 2000);
-    });
-
-    // Zakomentowano grecaptcha.render i grecaptcha.execute
-    // if (process.env.NODE_ENV !== 'development') {
-    //     grecaptcha.render('recaptcha', {
-    //         'sitekey': '6LexampleXXXXXXXXXXXXXXXX',
-    //         'callback': onCaptchaSuccess
-    //     });
-    // }
-
-    // Walidacja formularza
-    window.validateForm = function() {
-        const nameInput = document.querySelector('input[name="name"]');
-        const emailInput = document.querySelector('input[name="email"]');
-        const messageInput = document.querySelector('textarea[name="message"]');
-        const rodoCheckbox = document.querySelector('input[name="rodo_agreement"]');
-
-        if (!nameInput || !emailInput || !messageInput || !rodoCheckbox) {
-            return false;
-        }
-
-        const name = nameInput.value.trim();
-        const email = emailInput.value.trim();
-        const message = messageInput.value.trim();
-
-        if (!name || !email || !message) {
-            alert('Wszystkie pola są wymagane');
-            return false;
-        }
-
-        if (!rodoCheckbox.checked) {
-            alert('Wymagana jest zgoda na przetwarzanie danych osobowych');
-            return false;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert('Podaj poprawny adres email');
-            return false;
-        }
-
-        // Tymczasowo wyłączono grecaptcha.execute
-        // grecaptcha.execute();
-        return false;
-    };
 
     // Płynne przewijanie do sekcji
     document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -556,93 +532,38 @@ document.addEventListener('DOMContentLoaded', () => {
         taxCalendar.parentElement.insertBefore(filterContainer, taxCalendar);
     }
 
-    // Obsługa wysyłania formularza kontaktowego
-    const contactFormElement = document.getElementById('contactForm');
-    if (contactFormElement) {
-        contactFormElement.addEventListener('submit', e => {
-            e.preventDefault();
-            fetch('form.php', {
-                method: 'POST',
-                body: new FormData(document.getElementById('contactForm'))
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    success = true;
-                    error = false;
-                } else {
-                    success = false;
-                    error = true;
-                }
-            })
-            .catch(() => {
-                success = false;
-                error = true;
-            });
-        });
-    } else {
-        console.error('Formularz kontaktowy nie został znaleziony.');
-    }
+    // Obsługa formularza
+    document.querySelector('form').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Zapobiega domyślnemu wysyłaniu formularza
 
-    document.getElementById('contactForm').addEventListener('submit', e => {
-        e.preventDefault();
-        const submitBtn = document.getElementById('submitBtn');
-        const spinner = document.getElementById('spinner');
-        submitBtn.disabled = true;
-        spinner.classList.remove('hidden');
-        // Symulacja wysyłania formularza
-        setTimeout(() => {
-            submitBtn.disabled = false;
-            spinner.classList.add('hidden');
-            alert('Wiadomość wysłana!');
-        }, 2000);
+        const formData = new FormData(this);
+        const response = await fetch(this.action, {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            const messageBox = document.createElement('div');
+            messageBox.textContent = result.message;
+            messageBox.style.position = 'fixed';
+            messageBox.style.top = '20px';
+            messageBox.style.left = '50%';
+            messageBox.style.transform = 'translateX(-50%)';
+            messageBox.style.backgroundColor = '#4caf50';
+            messageBox.style.color = '#fff';
+            messageBox.style.padding = '10px 20px';
+            messageBox.style.borderRadius = '5px';
+            messageBox.style.zIndex = '1000';
+            document.body.appendChild(messageBox);
+
+            setTimeout(() => {
+                messageBox.remove();
+                location.reload(); // Odśwież stronę
+            }, 3000); // Wyświetl komunikat przez 3 sekundy
+        } else {
+            alert(result.message); // Wyświetl błąd
+        }
     });
 });
-
-// Zakomentowano grecaptcha.render i grecaptcha.execute podczas developmentu
-
-// if (process.env.NODE_ENV !== 'development') {
-//     grecaptcha.render('recaptcha', {
-//         'sitekey': '6LexampleXXXXXXXXXXXXXXXX',
-//         'callback': onCaptchaSuccess
-//     });
-// }
-
-// function validateForm() {
-//     const nameInput = document.querySelector('input[name="name"]');
-//     const emailInput = document.querySelector('input[name="email"]');
-//     const messageInput = document.querySelector('textarea[name="message"]');
-//     const rodoCheckbox = document.querySelector('input[name="rodo_agreement"]');
-
-//     if (!nameInput || !emailInput || !messageInput || !rodoCheckbox) {
-//         return false;
-//     }
-
-//     const name = nameInput.value.trim();
-//     const email = emailInput.value.trim();
-//     const message = messageInput.value.trim();
-
-//     if (!name || !email || !message) {
-//         alert('Wszystkie pola są wymagane');
-//         return false;
-//     }
-
-//     if (!rodoCheckbox.checked) {
-//         alert('Wymagana jest zgoda na przetwarzanie danych osobowych');
-//         return false;
-//     }
-
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     if (!emailRegex.test(email)) {
-//         alert('Podaj poprawny adres email');
-//         return false;
-//     }
-
-//     // Tymczasowo wyłączono grecaptcha.execute
-//     // grecaptcha.execute();
-//     return false;
-// }
-
-//function onCaptchaError() {
-//    alert("Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.");
-//}

@@ -1,4 +1,12 @@
 <?php
+header('Content-Type: application/json');
+
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/php-error.log'); // Loguj błędy do pliku
+ini_set('display_errors', 0); // Nie wyświetlaj błędów w odpowiedzi
+
+error_reporting(E_ALL);
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
@@ -23,6 +31,16 @@ header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-sr
 header("X-XSS-Protection: 1; mode=block");
 header("X-Content-Type-Options: nosniff");
 
+if (headers_sent()) {
+    echo json_encode(["status" => "error", "message" => "Nagłówki zostały już wysłane."]);
+    exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    echo json_encode(["status" => "error", "message" => "Nieprawidłowa metoda żądania."]);
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header('Content-Type: application/json');
 
@@ -33,9 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Pobranie i walidacja danych z formularza
-    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $message_text = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+    $message_text = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
 
     if (empty($name) || empty($email) || empty($message_text)) {
         echo json_encode(["status" => "error", "message" => "Wszystkie pola są wymagane."]);
@@ -60,33 +78,81 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Szyfrowanie SSL
         $mail->Port = 465; // Port SMTP
 
-        // Debugowanie SMTP
-        $mail->SMTPDebug = 2; // Ustaw poziom debugowania (2 = szczegółowe informacje)
-        $mail->Debugoutput = 'html'; // Wyświetlaj debugowanie w formacie HTML
+        // Ustaw kodowanie na UTF-8
+        $mail->CharSet = 'UTF-8';
 
         // Nadawca i odbiorca
-        $mail->setFrom('naczlex@wp.pl', 'Nacz-Lex'); // Nadawca
-        $mail->addAddress('naczlex@wp.pl'); // Odbiorca
+        $mail->setFrom('naczlex@wp.pl', 'Nacz-Lex'); // Nadawca: Twój adres e-mail
+        $mail->addAddress('naczlex@wp.pl'); // Odbiorca: Twój adres e-mail
+        $mail->addReplyTo($email, $name); // Ustaw adres Reply-To na adres użytkownika
+
+        // Pobierz aktualną datę i godzinę
+        $currentDate = date('Y-m-d H:i:s'); // Format: RRRR-MM-DD GG:MM:SS
 
         // Treść wiadomości
-        $mail->isHTML(false);
-        $mail->Subject = "Nowa wiadomość od $name";
-        $mail->Body = "Imię i nazwisko: $name\nEmail: $email\n\nWiadomość:\n$message_text";
+        $mail->isHTML(true); // Ustaw format wiadomości na HTML
+        $mail->Subject = "Nowa wiadomość z formularza kontaktowego od: $email";
 
-        // Test połączenia z serwerem SMTP
-        try {
-            $mail->smtpConnect([
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
-                ],
-            ]);
-            echo json_encode(["status" => "success", "message" => "Połączenie z serwerem SMTP działa poprawnie."]);
-        } catch (Exception $e) {
-            echo json_encode(["status" => "error", "message" => "Błąd połączenia z serwerem SMTP: " . $mail->ErrorInfo]);
-            exit;
-        }
+        $mail->Body = "
+            <html>
+                <head>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            line-height: 1.6;
+                            background-color: #f9f9f9;
+                            color: #333;
+                            padding: 20px;
+                        }
+                        .container {
+                            max-width: 600px;
+                            margin: 0 auto;
+                            background: #fff;
+                            border: 1px solid #ddd;
+                            border-radius: 8px;
+                            padding: 20px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        }
+                        .header {
+                            font-size: 20px;
+                            font-weight: bold;
+                            color: #4caf50;
+                            margin-bottom: 20px;
+                            text-align: center;
+                        }
+                        .content p {
+                            margin: 10px 0;
+                        }
+                        .content p strong {
+                            color: #555;
+                        }
+                        .footer {
+                            font-size: 12px;
+                            color: #777;
+                            text-align: center;
+                            margin-top: 20px;
+                            border-top: 1px solid #ddd;
+                            padding-top: 10px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>Nowa wiadomość z formularza kontaktowego</div>
+                        <div class='content'>
+                            <p><strong>Imię i nazwisko:</strong> $name</p>
+                            <p><strong>Email:</strong> $email</p>
+                            <p><strong>Wiadomość:</strong></p>
+                            <p>$message_text</p>
+                        </div>
+                        <div class='footer'>
+                            <p><strong>Data wysłania:</strong> $currentDate</p>
+                            <p>Wiadomość została wysłana z formularza kontaktowego na stronie Nacz-Lex.</p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        ";
 
         // Wyślij wiadomość
         $mail->send();
@@ -97,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(["status" => "error", "message" => "Wystąpił błąd podczas wysyłania wiadomości: " . $mail->ErrorInfo]);
     }
 } else {
-    header("Location: index.html");
+    echo json_encode(["status" => "error", "message" => "Nieprawidłowa metoda żądania."]);
     exit;
 }
 ?>
