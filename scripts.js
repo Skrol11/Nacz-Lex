@@ -377,21 +377,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Obsługa formularza kontaktowego
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
     const formStatus = document.getElementById('formStatus');
 
-    if (formStatus) {
-        if (status === 'success') {
-            formStatus.innerHTML = '<p class="text-green-600">Wiadomość została wysłana pomyślnie!</p>';
-        } else if (status === 'error') {
-            formStatus.innerHTML = '<p class="text-red-600">Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie.</p>';
-        } else if (status === 'robot') {
-            formStatus.innerHTML = '<p class="text-red-600">Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.</p>';
-        } else if (status === 'rodo_missing') {
-            formStatus.innerHTML = '<p class="text-red-600">Wymagana jest zgoda na przetwarzanie danych osobowych. Spróbuj ponownie.</p>';
-        }
-    }
+    if (!contactForm) return; // Jeśli formularz nie istnieje, zakończ
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        formStatus.textContent = ''; // Wyczyść poprzedni status
+        spinner.classList.remove('hidden'); // Pokaż spinner
+        submitBtn.disabled = true; // Zablokuj przycisk
+
+        fetch('form.php', {
+            method: 'POST',
+            body: new FormData(contactForm)
+        })
+        .then(response => response.json())
+        .then(data => {
+            spinner.classList.add('hidden'); // Ukryj spinner
+            submitBtn.disabled = false; // Odblokuj przycisk
+
+            if (data.status === 'success') {
+                formStatus.textContent = 'Wiadomość została wysłana pomyślnie!';
+                formStatus.className = 'text-green-600';
+                contactForm.reset(); // Wyczyść formularz
+            } else {
+                formStatus.textContent = data.message || 'Wystąpił błąd. Spróbuj ponownie.';
+                formStatus.className = 'text-red-600';
+            }
+        })
+        .catch(() => {
+            spinner.classList.add('hidden'); // Ukryj spinner
+            submitBtn.disabled = false; // Odblokuj przycisk
+            formStatus.textContent = 'Wystąpił błąd. Spróbuj ponownie.';
+            formStatus.className = 'text-red-600';
+        });
+    });
+
+    // Zakomentowano grecaptcha.render i grecaptcha.execute
+    // if (process.env.NODE_ENV !== 'development') {
+    //     grecaptcha.render('recaptcha', {
+    //         'sitekey': '6LexampleXXXXXXXXXXXXXXXX',
+    //         'callback': onCaptchaSuccess
+    //     });
+    // }
 
     // Walidacja formularza
     window.validateForm = function() {
@@ -424,8 +455,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
 
-        // Jeśli wszystko OK, uruchamiamy reCAPTCHA
-        grecaptcha.execute();
+        // Tymczasowo wyłączono grecaptcha.execute
+        // grecaptcha.execute();
         return false;
     };
 
@@ -506,6 +537,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Obsługa wysyłania formularza kontaktowego
+    const contactFormElement = document.getElementById('contactForm');
+    if (contactFormElement) {
+        contactFormElement.addEventListener('submit', e => {
+            e.preventDefault();
+            fetch('form.php', {
+                method: 'POST',
+                body: new FormData(document.getElementById('contactForm'))
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    success = true;
+                    error = false;
+                } else {
+                    success = false;
+                    error = true;
+                }
+            })
+            .catch(() => {
+                success = false;
+                error = true;
+            });
+        });
+    } else {
+        console.error('Formularz kontaktowy nie został znaleziony.');
+    }
+
     document.getElementById('contactForm').addEventListener('submit', e => {
         e.preventDefault();
         const submitBtn = document.getElementById('submitBtn');
@@ -520,6 +578,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     });
 });
+
+// Zakomentowano grecaptcha.render i grecaptcha.execute podczas developmentu
+
+// if (process.env.NODE_ENV !== 'development') {
+//     grecaptcha.render('recaptcha', {
+//         'sitekey': '6LexampleXXXXXXXXXXXXXXXX',
+//         'callback': onCaptchaSuccess
+//     });
+// }
+
+// function validateForm() {
+//     const nameInput = document.querySelector('input[name="name"]');
+//     const emailInput = document.querySelector('input[name="email"]');
+//     const messageInput = document.querySelector('textarea[name="message"]');
+//     const rodoCheckbox = document.querySelector('input[name="rodo_agreement"]');
+
+//     if (!nameInput || !emailInput || !messageInput || !rodoCheckbox) {
+//         return false;
+//     }
+
+//     const name = nameInput.value.trim();
+//     const email = emailInput.value.trim();
+//     const message = messageInput.value.trim();
+
+//     if (!name || !email || !message) {
+//         alert('Wszystkie pola są wymagane');
+//         return false;
+//     }
+
+//     if (!rodoCheckbox.checked) {
+//         alert('Wymagana jest zgoda na przetwarzanie danych osobowych');
+//         return false;
+//     }
+
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     if (!emailRegex.test(email)) {
+//         alert('Podaj poprawny adres email');
+//         return false;
+//     }
+
+//     // Tymczasowo wyłączono grecaptcha.execute
+//     // grecaptcha.execute();
+//     return false;
+// }
 
 function onCaptchaError() {
     alert("Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.");

@@ -26,18 +26,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <!-- Poprawiony skrypt reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js?render=explicit&onload=onloadCallback" async defer></script>
     <script src="scripts.js" defer></script>
     <!-- Skrypty reCAPTCHA i główny skrypt JavaScript -->
-    <style>
-        /* Poprawa kontrastu kolorów */
-        .text-blue-300:hover {
-            color: #1e90ff; /* Zwiększony kontrast dla linków */
-        }
-        .bg-blue-900 {
-            background-color: #003366; /* Zwiększony kontrast dla tła */
-        }
-    </style>
 </head>
 
 <body class="bg-gray-50">
@@ -197,18 +187,23 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-8">Aktualności</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Aktualność 1 – Wielkanocne życzenia -->
+
+                <!-- Aktualność 1 – Długi weekend majowy -->
                 <div class="bg-yellow-50 p-6 rounded-lg shadow border border-yellow-200">
                     <h3 class="text-xl font-semibold mb-4 flex items-center gap-2 text-yellow-800">
-                        🐣 WIELKANOC 🐣
+                        🌼 DŁUGI WEEKEND MAJOWY 🌼
                     </h3>
                     <div class="flex items-start gap-4">
                         <div>
                             <p class="text-gray-700 mb-4">
-                                Z okazji nadchodzących Świąt Wielkanocnych składamy Państwu 🌷 serdeczne życzenia zdrowia, spokoju i radości w gronie najbliższych. Niech ten wyjątkowy czas przyniesie wytchnienie, dobrą energię i same pozytywne chwile – zarówno w życiu osobistym, jak i zawodowym.
+                                Informujemy, że nasze biuro rachunkowe będzie <strong>nieczynne</strong> w dniach <strong>1 maja (Święto Pracy)</strong> oraz <strong>2 maja 2025 r.</strong>. 
+                                Zapraszamy do kontaktu i współpracy od <strong>5 maja 2025 r.</strong>.
                             </p>
-                            <p class="text-red-700 font-semibold">
-                                ⚠️ Uwaga: w dniu <strong>21 kwietnia 2025 r.</strong> nasze biuro rachunkowe będzie <strong>nieczynne</strong>. Zapraszamy do kontaktu w kolejnych dniach roboczych.
+                            <p class="text-gray-700 mb-4">
+                                Życzymy wszystkim naszym klientom i partnerom biznesowym udanego odpoczynku, chwili wytchnienia oraz naładowania baterii na resztę roku! 🌞
+                            </p>
+                            <p class="text-blue-800 font-semibold">
+                                Do zobaczenia po długim weekendzie! 😊
                             </p>
                         </div>
                     </div>
@@ -454,35 +449,28 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-12">Napisz do Nas</h2>
             <div class="bg-gray-50 p-8 rounded-lg shadow-lg w-full">
-                <div x-data="{ loading: false, success: false, error: false }">
-                    <form @submit.prevent="loading = true; setTimeout(() => { loading = false; success = true }, 2000)" class="space-y-4">
-                        <input type="text" name="name" placeholder="Imię i nazwisko" 
-                               class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                        <input type="email" name="email" placeholder="Email" 
-                               class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                        <textarea name="message" rows="5" placeholder="Treść wiadomości" 
-                                  class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required></textarea>
-                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                        
-                        <!-- Zgoda RODO -->
-                        <div class="flex items-start mt-4">
-                            <input type="checkbox" id="rodo_agreement" name="rodo_agreement" class="mt-1" required>
-                            <label for="rodo_agreement" class="ml-2 text-sm text-gray-600">
-                                Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w związku z wysłaniem zapytania przez formularz kontaktowy.
-                            </label>
-                        </div>
-                        
-                        <div id="recaptcha" class="g-recaptcha" data-sitekey="your-site-key"></div>
-                        
-                        <button type="submit" class="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-900 transition-colors">
-                            <span x-show="!loading">Wyślij wiadomość</span>
-                            <span x-show="loading" class="loading"></span>
-                        </button>
-                        <p x-show="success" class="text-green-600" aria-live="polite">Wiadomość wysłana pomyślnie!</p>
-                        <p x-show="error" class="text-red-600" aria-live="polite">Wystąpił błąd. Spróbuj ponownie.</p>
-                    </form>
-                </div>
-                <div id="formStatus" class="mt-4 text-center"></div>
+                <form id="contactForm" method="POST" class="space-y-4">
+                    <input type="text" name="name" placeholder="Imię i nazwisko" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                    <input type="email" name="email" placeholder="Email" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                    <textarea name="message" rows="5" placeholder="Treść wiadomości" 
+                              class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required></textarea>
+                    
+                    <!-- Zgoda RODO -->
+                    <div class="flex items-start mt-4">
+                        <input type="checkbox" id="rodo_agreement" name="rodo_agreement" class="mt-1" required>
+                        <label for="rodo_agreement" class="ml-2 text-sm text-gray-600">
+                            Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w związku z wysłaniem zapytania przez formularz kontaktowy.
+                        </label>
+                    </div>
+                    
+                    <button id="submitBtn" type="submit" class="w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                        <span>Wyślij wiadomość</span>
+                    </button>
+                    <div id="spinner" class="loading hidden"></div>
+                    <p id="formStatus" class="mt-4 text-center"></p>
+                </form>
             </div>
         </div>
     </section>
@@ -507,20 +495,6 @@
             </p>
         </div>
     </footer>
-
-    <!-- Skrypt reCAPTCHA -->
-    <script>
-        var onloadCallback = function() {
-            grecaptcha.render('recaptcha', {
-                'sitekey': '6LexampleXXXXXXXXXXXXXXXX', // Klucz sitekey reCAPTCHA
-                'callback': onCaptchaSuccess
-            });
-        };
-
-        function onCaptchaSuccess(token) {
-            document.getElementById('contactForm').submit(); // Automatyczne przesłanie formularza po weryfikacji
-        }
-    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

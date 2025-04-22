@@ -385,3 +385,12 @@ button.loading::after {
         transform: rotate(360deg);
     }
 }
+
+/* Poprawa kontrastu kolorów */
+.text-blue-300:hover {
+    color: #1e90ff; /* Zwiększony kontrast dla linków */
+}
+
+.bg-blue-900 {
+    background-color: #003366; /* Zwiększony kontrast dla tła */
+}
