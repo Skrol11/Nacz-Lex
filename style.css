@@ -385,19 +385,3 @@ button.loading::after {
         transform: rotate(360deg);
     }
 }
-
-/* Styl dla motywu kolorów */
-:root {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-}
-
-.dark {
-    --bg-color: #1a202c;
-    --text-color: #ffffff;
-}
-
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-}

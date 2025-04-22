@@ -541,15 +541,5 @@
             });
         });
     </script>
-
-    <!-- Przycisk zmiany trybu -->
-    <div class="flex justify-end p-4">
-        <button @click="darkMode = !darkMode" x-data="{ darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches }" 
-                :class="{ 'bg-gray-800 text-white': darkMode, 'bg-gray-200 text-black': !darkMode }" 
-                class="p-2 rounded">
-            <span x-show="!darkMode">🌞 Jasny</span>
-            <span x-show="darkMode">🌙 Ciemny</span>
-        </button>
-    </div>
 </body>
 </html>

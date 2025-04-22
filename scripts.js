@@ -521,16 +521,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-document.addEventListener('alpine:init', () => {
-    Alpine.data('themeSwitcher', () => ({
-        darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
-        toggle() {
-            this.darkMode = !this.darkMode;
-            document.documentElement.classList.toggle('dark', this.darkMode);
-        }
-    }));
-});
-
 function onCaptchaError() {
     alert("Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.");
 }
