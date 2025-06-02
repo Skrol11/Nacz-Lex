@@ -399,62 +399,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Obsługa formularza kontaktowego
     const contactForm = document.getElementById('contactForm');
+    const formThanks = document.getElementById('formThanks');
+    const formStatus = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
     const spinner = document.getElementById('spinner');
-    const formStatus = document.getElementById('formStatus');
 
-    // Sprawdź, czy formularz istnieje
-    if (!contactForm) {
-        console.error('Formularz kontaktowy nie został znaleziony.');
-        return; // Zakończ działanie, jeśli formularz nie istnieje
-    }
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (submitBtn) submitBtn.disabled = true;
+            if (spinner) spinner.classList.remove('hidden');
 
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        // Sprawdź, czy przycisk, spinner i status istnieją
-        if (formStatus) formStatus.textContent = ''; // Wyczyść poprzedni status
-        if (submitBtn) submitBtn.disabled = true; // Zablokuj przycisk
-        if (spinner) spinner.classList.remove('hidden'); // Pokaż spinner
-
-        fetch('form.php', {
-            method: 'POST',
-            body: new FormData(contactForm)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-            if (submitBtn) submitBtn.disabled = false; // Odblokuj przycisk
-            if (spinner) spinner.classList.add('hidden'); // Ukryj spinner
-
-            if (data.status === 'success') {
-                if (formStatus) {
-                    formStatus.textContent = 'Wiadomość została wysłana pomyślnie!';
-                    formStatus.className = 'text-green-600';
+            fetch('form.php', {
+                method: 'POST',
+                body: new FormData(contactForm)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Zawsze czyść formularz
+                contactForm.reset();
+                if (formThanks) {
+                    formThanks.textContent = 'Dziękujemy za wysłanie formularza, skontaktujemy się z tobą najszybciej jak umiemy :)';
+                    formThanks.classList.remove('hidden');
                 }
-                contactForm.reset(); // Wyczyść formularz
-            } else {
-                if (formStatus) {
-                    formStatus.textContent = data.message || 'Wystąpił błąd. Spróbuj ponownie.';
-                    formStatus.className = 'text-red-600';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            })
+            .catch(error => {
+                // Zawsze czyść formularz
+                contactForm.reset();
+                if (formThanks) {
+                    formThanks.textContent = 'Dziękujemy za wysłanie formularza, skontaktujemy się z tobą najszybciej jak umiemy :)';
+                    formThanks.classList.remove('hidden');
                 }
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            if (submitBtn) submitBtn.disabled = false; // Odblokuj przycisk
-            if (spinner) spinner.classList.add('hidden'); // Ukryj spinner
-            if (formStatus) {
-                formStatus.textContent = 'Wystąpił błąd. Spróbuj ponownie.';
-                formStatus.className = 'text-red-600';
-            }
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            });
         });
-    });
+    }
 
     // Płynne przewijanie do sekcji
     document.querySelectorAll('a[href^="#"]').forEach(link => {
