@@ -427,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 2000);
             })
             .catch(error => {
-                // Zawsze czyść formularz
+                console.error(error); // Dodaj to!
                 contactForm.reset();
                 if (formThanks) {
                     formThanks.textContent = 'Dziękujemy za wysłanie formularza, skontaktujemy się z tobą najszybciej jak umiemy :)';
@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
         taxCalendar.parentElement.insertBefore(filterContainer, taxCalendar);
     }
 
-    // Obsługa formularza
+    // Usuń lub zakomentuj ten fragment!
     document.querySelector('form').addEventListener('submit', async function (event) {
         event.preventDefault(); // Zapobiega domyślnemu wysyłaniu formularza
 
